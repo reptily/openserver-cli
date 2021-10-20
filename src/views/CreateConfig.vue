@@ -1,7 +1,9 @@
 <template>
     <div>
+        <img src="../assets/img/logo_start.jpeg">
         <h1>Начнем!</h1>
-        Префикс: <input placeholder="Имя сети" v-model="name_networks">
+        Для старта нужно определить имя docker сети.<br>
+        <div class="label input">Имя сети:</div><input type="text" v-model="name_networks">
         <button @click="createYaml">Создать конфигурацию</button>
     </div>
 </template>
