@@ -3,19 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service electron:serve",
-    "build": "vue-cli-service electron:build",
-    "web:serve": "vue-cli-service serve",
-    "web:build": "vue-cli-service build",
-    "web:lint": "vue-cli-service lint",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "dev": "sh bin/preload.sh && vue-cli-service electron:serve",
+    "build": "sh bin/preload.sh && vue-cli-service electron:build",
+    "web:serve": "sh bin/preload.sh && vue-cli-service serve",
+    "web:build": "sh bin/preload.sh && vue-cli-service build",
+    "web:lint": "sh bin/preload.sh && vue-cli-service lint",
+    "postinstall": "sh bin/preload.sh && electron-builder install-app-deps",
+    "postuninstall": "sh bin/preload.sh && electron-builder install-app-deps"
   },
   "main": "background.js",
   "dependencies": {
-    "ant-design-vue": "^1.7.8",
     "core-js": "^3.6.5",
     "fs": "^0.0.1-security",
+    "node-docker-api": "^1.1.22",
     "path": "^0.12.7",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",

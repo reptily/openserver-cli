@@ -1,5 +1,5 @@
 <template>
-    <router-view/>
+        <router-view/>
 </template>
 
 <script>
@@ -28,11 +28,17 @@
         font-style: normal;
     }
 
+    body, html, #app, .app {
+        height: 100%;
+    }
+
     body {
         background: #FFF;
         line-height: 1.5;
         font-family: 'PT Sans', serif;
         font-size: 18px;
+        margin: 0;
+        padding: 0;
     }
 
     select {
@@ -91,7 +97,6 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #303030;
-        margin-top: 60px;
     }
 
     .plus {

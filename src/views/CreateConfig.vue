@@ -2,7 +2,9 @@
     <div>
         <img src="../assets/img/logo_start.jpeg">
         <h1>Начнем!</h1>
-        Для старта нужно определить имя docker сети.<br>
+        <p>
+            Для старта нужно определить имя <b>docker</b> сети.<br>
+        </p>
         <div class="label input">Имя сети:</div><input type="text" v-model="name_networks">
         <button @click="createYaml">Создать конфигурацию</button>
     </div>
@@ -48,7 +50,7 @@
                     'driver': 'bridge',
                 };
 
-                global.fs.writeFile(global.process.env.PWD + "/../docker-compose.yml", YAML.stringify(tpl), (err) => {
+                this.fs.writeFile(this.DOCKER_COMPOSER_FILE, YAML.stringify(tpl), (err) => {
                     if (err) {
                         console.error(err);
                         return;
