@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Main from "@/views/Main.vue";
 import CreateConfig from "@/views/CreateConfig.vue";
 import ListContainer from "@/views/ListContainer.vue";
-// import AddContainer from "@/views/AddContainer.vue";
+import AddContainer from "@/views/AddContainer.vue";
 
 const routes = [
   {
@@ -20,11 +20,11 @@ const routes = [
     name: "ListContainer",
     component: ListContainer,
   },
-  // {
-  //   path: "/add_container",
-  //   name: "AddContainer",
-  //   component: AddContainer,
-  // },
+  {
+    path: "/add_container/:name",
+    name: "AddContainer",
+    component: AddContainer,
+  },
 ];
 
 const router = createRouter({

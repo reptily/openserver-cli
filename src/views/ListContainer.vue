@@ -1,10 +1,10 @@
 <template>
-    <div class="app д">
+    <div class="app">
         <div class="icon">
-            <img src="../assets/img/container/php.png">
+            <img src="../assets/img/back.png" @click="$router.push('/')">
         </div>
-        <div class="icon">
-            <img src="../assets/img/container/nginx.png">
+        <div class="icon" v-for="(module, i) in modules" :key="i" @click="$router.push('/add_container/' + module.service_name)">
+            <img :src="module.icon">
         </div>
     </div>
 </template>
@@ -23,7 +23,8 @@
                 modules: [
                     {
                         title: 'Nginx',
-                        service_name: 'webserver',
+                        icon: require('../assets/img/container/nginx.png'),
+                        service_name: 'nginx',
                         config: nginx,
                     },
                 ],
@@ -39,6 +40,11 @@
 </script>
 
 <style scoped>
+    .app {
+        display: flex;
+        flex-direction: row;
+    }
+
     .icon {
         width: 84px;
         height: 74px;

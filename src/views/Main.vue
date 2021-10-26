@@ -18,6 +18,9 @@
             </div>
         </div>
         <div class="body">
+            <div class="error" v-if="error.connect_socket">
+                Ошибка подключение к демону
+            </div>
             <div class="dashboard_container" v-for="(container, i) in containers" :key="i">
                 <div class="icon">
                     <img src="../assets/img/container/php.png">
@@ -30,11 +33,9 @@
                     <div><b>Статус:</b> {{ container.data.Status }}</div>
                     <div>
                         <b>Ports:</b>
-                        <span v-for="(port, p) in container.data.Ports" :key="p">
-                            <span
-                                    style="background: #FFF; margin-left: 10px; border-radius: 3px; padding: 0 5px"
-                                    v-if="port.IP !== '::' && port.PublicPort !== undefined">
-                                {{ port.PublicPort }}
+                        <span v-for="(port, p) in container.data.sortPorts" :key="p">
+                            <span style="background: #FFF; margin-left: 10px; border-radius: 3px; padding: 0 5px">
+                                {{ port }}
                             </span>
                         </span>
                     </div>
@@ -59,6 +60,9 @@
                 add_container: null,
                 container: null,
                 containers: [],
+                error: {
+                    connect_socket: false,
+                },
             };
         },
 
@@ -86,12 +90,30 @@
                 this.initContainers();
             },
 
-            initContainers() {
-                global.docker.container.list().then(containers => {
-                    this.containers = containers;
-                    console.log(containers);
-                    //setTimeout(() => this.initContainers(), 1000);
+            sortPort() {
+                this.containers.forEach((container, i) => {
+                    let ports = [];
+                    container.data.Ports.forEach((port) => {
+                        if (port.IP !== "::" && port.PublicPort !== undefined) {
+                            ports.push(port.PublicPort);
+                        }
+                    });
+                    this.containers[i].data.sortPorts = ports.sort();
                 });
+            },
+
+            initContainers() {
+                global.docker.container.list()
+                    .then(containers => {
+                        this.containers = containers;
+                        this.sortPort();
+                        this.error.connect_socket = false;
+                        setTimeout(() => this.initContainers(), 1000);
+                    })
+                    .catch(() => {
+                        this.error.connect_socket = true;
+                        setTimeout(() => this.initContainers(), 1000);
+                    });
             },
 
             getYaml(json) {
@@ -137,6 +159,13 @@
         border: 1px solid #003e00;
         background: powderblue;
         cursor: pointer;
+    }
+
+    .error {
+        min-height: 100px;
+        background: url("../assets/img/error.png") top center no-repeat;
+        color: #D00;
+        padding-top: 72px;
     }
 
     .app {
@@ -233,7 +262,7 @@
     }
 
     .icon.add {
-        background: url("../assets/img/container/add.png");
+        background: url("../assets/img/add.png");
         background-size: 80%;
         background-repeat: no-repeat;
         background-position: 6px 6px;
