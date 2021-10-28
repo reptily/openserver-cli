@@ -2,6 +2,17 @@
   "name": "openserver-cli",
   "version": "0.0.1",
   "private": true,
+  "win": {
+    "target": [
+      "nsis",
+      "portable",
+      "zip"
+    ],
+    "icon": "openserver.ico"
+  },
+  "portable": {
+    "artifactName": "OpenServer.exe"
+  },
   "scripts": {
     "dev": "sh bin/preload.sh && vue-cli-service electron:serve",
     "build": "sh bin/preload.sh && vue-cli-service electron:build",
@@ -29,6 +40,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "electron": "^13.0.0",
+    "electron-builder": "^22.13.1",
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
